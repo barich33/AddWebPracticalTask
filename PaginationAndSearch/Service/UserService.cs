@@ -21,7 +21,7 @@ namespace PaginationAndSearch.Service
         public async Task<DataTableHelper.Result<UserViewModel>> GetUsers(Parameters param)
         {
             string Baseurl = _configuration.GetValue<string>("API_URL");
-            DataTableHelper.Result<UserViewModel> EmpInfo = new DataTableHelper.Result<UserViewModel>();
+            DataTableHelper.Result<UserViewModel> userInfo = new DataTableHelper.Result<UserViewModel>();
             using (var client = new HttpClient())
             {
                 //Passing service base url
@@ -38,12 +38,12 @@ namespace PaginationAndSearch.Service
                 if (Res.IsSuccessStatusCode)
                 {
                     //Storing the response details recieved from web api
-                    var EmpResponse = Res.Content.ReadAsStringAsync().Result;
-                    //Deserializing the response recieved from web api and storing into the Employee list
-                    EmpInfo = JsonConvert.DeserializeObject<DataTableHelper.Result<UserViewModel>>(EmpResponse);
+                    var UsrResponse = Res.Content.ReadAsStringAsync().Result;
+
+                    userInfo = JsonConvert.DeserializeObject<DataTableHelper.Result<UserViewModel>>(UsrResponse);
                 }
             }
-            return EmpInfo;
+            return userInfo;
         }
     }
 }
